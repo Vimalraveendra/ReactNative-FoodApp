@@ -6,6 +6,7 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 
 import data from '../../Data/MainData';
@@ -18,6 +19,7 @@ AntIcon.loadFont();
 class Main extends React.Component {
   state = {
     data: data,
+    text: '',
   };
 
   ratingStar = (rating) => {
@@ -65,12 +67,38 @@ class Main extends React.Component {
     );
   };
 
+  setSearchText = (inputText) => {
+    this.setState({text: inputText});
+  };
+
+  clearItems = () => {
+    const {data} = this.state;
+    this.setState({text: '', data});
+  };
+
+  filteredData = () => {
+    return this.state.data.filter((item) => {
+      return item.name.toLowerCase().includes(this.state.text.toLowerCase());
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Search here..."
+            style={styles.textInput}
+            onChangeText={(text) => this.setSearchText(text)}
+            value={this.state.text}
+          />
+          <TouchableOpacity onPress={this.clearItems}>
+            <Icon name="ios-close" size={20} color="gray" />
+          </TouchableOpacity>
+        </View>
         <View style={styles.list}>
           <FlatList
-            data={this.state.data}
+            data={this.filteredData()}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
@@ -85,6 +113,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#f2f2f2',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 100,
+    marginTop: 10,
+  },
+  textInput: {
+    flex: 1,
+    marginLeft: 10,
+    color: 'red',
   },
   list: {
     flex: 1,
