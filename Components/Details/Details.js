@@ -2,8 +2,7 @@ import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
 
-const Details = ({item}) => {
-  console.log('hell', item);
+const Details = () => {
   return (
     <View style={styles.container}>
       <Text>Details Screen</Text>

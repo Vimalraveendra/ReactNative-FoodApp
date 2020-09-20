@@ -1,11 +1,18 @@
 import React from 'react';
 
-import {View, FlatList, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 const Data = [
   {
     type: 'Dessert',
-    color: '#f7931e',
+    color: '#f7932e',
     data: [
       {
         name: 'Cream Sweet',
@@ -55,7 +62,7 @@ const Data = [
   },
   {
     type: 'Other',
-    color: '#ed1e79',
+    color: '#ed3e69',
     data: [
       {
         name: 'Seafood Prawns',
@@ -87,9 +94,11 @@ class Menu extends React.Component {
         <Text style={[styles.itemType, {color: item.color}]}>{item.type}</Text>
         <View style={[styles.item, {backgroundColor: item.color}]}>
           <FlatList
-            data={item}
+            data={item.data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderItem}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>
@@ -97,9 +106,14 @@ class Menu extends React.Component {
   };
   renderItem = ({item}) => {
     return (
-      <View>
-        <Text style={[styles.itemType, {color: item.color}]}>{item.name}</Text>
-      </View>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() =>
+          this.props.props.navigate('Details', {image: item.image})
+        }>
+        <Image source={item.image} style={styles.image} />
+        <Text style={styles.name}>{item.name}</Text>
+      </TouchableOpacity>
     );
   };
 
@@ -110,6 +124,7 @@ class Menu extends React.Component {
           data={this.state.data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderMenu}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     );
@@ -119,6 +134,8 @@ class Menu extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 10,
+    marginBottom: 10,
   },
   itemType: {
     fontSize: 18,
@@ -130,6 +147,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
+  },
+  itemContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#fff',
+    marginRight: 30,
+  },
+  name: {
+    marginTop: 10,
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
