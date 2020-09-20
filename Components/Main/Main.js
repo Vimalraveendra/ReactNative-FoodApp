@@ -86,7 +86,9 @@ class Main extends React.Component {
             <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.props.props.navigate('Details')}>
           <AntIcon name="arrowright" size={20} color="blue" />
         </TouchableOpacity>
       </LinearGradient>
