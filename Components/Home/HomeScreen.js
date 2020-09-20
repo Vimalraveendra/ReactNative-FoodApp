@@ -3,7 +3,8 @@ import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import ScrollableTabView, {
   DefaultTabBar,
 } from 'react-native-scrollable-tab-view';
-import Main from '../Main/Main';
+import Main from '../MainMenu/Main/Main';
+import Menu from '../MainMenu/Menu/Menu';
 
 const {width} = Dimensions.get('screen');
 
@@ -24,7 +25,7 @@ const HomeScreen = ({navigation}) => {
           tabBarActiveTextColor="blue"
           renderTabBar={() => <DefaultTabBar />}>
           <Main tabLabel="Main" props={navigation} />
-          <Text tabLabel="Menu">Menu</Text>
+          <Menu tabLabel="Menu" props={navigation} />
           <Text tabLabel="Popular">Popular</Text>
         </ScrollableTabView>
       </View>
