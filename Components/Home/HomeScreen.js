@@ -7,7 +7,7 @@ import Main from '../Main/Main';
 
 const {width} = Dimensions.get('screen');
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,7 +23,7 @@ const HomeScreen = () => {
           initialPage={0}
           tabBarActiveTextColor="blue"
           renderTabBar={() => <DefaultTabBar />}>
-          <Main tabLabel="Main" />
+          <Main tabLabel="Main" props={navigation} />
           <Text tabLabel="Menu">Menu</Text>
           <Text tabLabel="Popular">Popular</Text>
         </ScrollableTabView>
