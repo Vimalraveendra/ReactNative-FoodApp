@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 100,
     marginTop: 10,
+    marginVertical: 5,
   },
   textInput: {
     flex: 1,
