@@ -9,6 +9,8 @@ import {
   TextInput,
 } from 'react-native';
 
+import ratingStar from '../../Ratings/Ratings';
+
 import data from '../../Data/MainData';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,23 +22,6 @@ class Main extends React.Component {
   state = {
     data: data,
     text: '',
-  };
-
-  ratingStar = (rating) => {
-    let stars = [];
-    //Loop 5 times
-    for (let i = 1; i <= 5; i++) {
-      // setting rating to filled star
-      let name = 'ios-star';
-
-      // If ratings is lower, set the rating to unfilled star
-      if (i > rating) {
-        name = 'ios-star-outline';
-      }
-      stars.push(<Icon name={name} size={15} style={styles.star} key={i} />);
-    }
-
-    return stars;
   };
 
   renderItem = ({item}) => {
@@ -51,7 +36,7 @@ class Main extends React.Component {
         </View>
         <View style={styles.nameContent}>
           <Text style={styles.name}>{item.name}</Text>
-          <View style={styles.rating}>{this.ratingStar(item.rating)}</View>
+          <View style={styles.rating}>{ratingStar(item.rating)}</View>
           <View style={styles.priceContainer}>
             <Text style={styles.price}>{item.price}</Text>
           </View>

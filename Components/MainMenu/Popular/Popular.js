@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
+import ratingStar from '../../Ratings/Ratings';
 import Icon from 'react-native-vector-icons/Ionicons';
 Icon.loadFont();
 
@@ -48,29 +49,12 @@ class Popular extends React.Component {
     data: Data,
   };
 
-  ratingStar = (rating) => {
-    let stars = [];
-    //Loop 5 times
-    for (let i = 1; i <= 5; i++) {
-      // setting rating to filled star
-      let name = 'ios-star';
-
-      // If ratings is lower, set the rating to unfilled star
-      if (i > rating) {
-        name = 'ios-star-outline';
-      }
-      stars.push(<Icon name={name} size={15} style={styles.star} key={i} />);
-    }
-
-    return stars;
-  };
-
   renderAvatar = ({item}) => {
     return (
       <View style={styles.avatarContainer}>
         <Image source={item.image} style={styles.image} />
         <Text style={styles.name}>{item.name}</Text>
-        <View style={styles.rating}>{this.ratingStar(item.rating)}</View>
+        <View style={styles.rating}>{ratingStar(item.rating)}</View>
         <Text numberOfLines={2} style={styles.comment}>
           {item.comment}
         </Text>
