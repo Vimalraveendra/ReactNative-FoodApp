@@ -37,7 +37,11 @@ class Menu extends React.Component {
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={() =>
-          this.props.props.navigate('Details', {image: item.image})
+          this.props.props.navigate('Details', {
+            image: item.image,
+            price: item.price,
+            name: item.name,
+          })
         }>
         <Image source={item.image} style={styles.image} />
         <Text style={styles.name}>{item.name}</Text>
