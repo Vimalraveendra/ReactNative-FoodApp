@@ -59,7 +59,11 @@ class Main extends React.Component {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            this.props.props.navigate('Details', {image: item.image})
+            this.props.props.navigate('Details', {
+              image: item.image,
+              price: item.price,
+              name: item.name,
+            })
           }>
           <AntIcon name="arrowright" size={20} color="blue" />
         </TouchableOpacity>
@@ -126,7 +130,6 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     marginLeft: 10,
-    color: 'red',
   },
   list: {
     flex: 1,
