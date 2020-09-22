@@ -9,51 +9,17 @@ import {
   TextInput,
 } from 'react-native';
 
-import ratingStar from '../../Ratings/Ratings';
+import RenderMain from '../../RenderItems/RenderMain';
 
 import data from '../../Data/MainData';
-import LinearGradient from 'react-native-linear-gradient';
+
 import Icon from 'react-native-vector-icons/Ionicons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
 Icon.loadFont();
-AntIcon.loadFont();
 
 class Main extends React.Component {
   state = {
     data: data,
     text: '',
-  };
-
-  renderItem = ({item}) => {
-    return (
-      <LinearGradient
-        colors={['#4c669f', '#3b5998']}
-        start={{x: 0, y: 1}}
-        end={{x: 1, y: 0}}
-        style={styles.item}>
-        <View style={styles.imageContainer}>
-          <Image source={item.image} style={styles.image} />
-        </View>
-        <View style={styles.nameContent}>
-          <Text style={styles.name}>{item.name}</Text>
-          <View style={styles.rating}>{ratingStar(item.rating)}</View>
-          <View style={styles.priceContainer}>
-            <Text style={styles.price}>{item.price}</Text>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            this.props.props.navigate('Details', {
-              image: item.image,
-              price: item.price,
-              name: item.name,
-            })
-          }>
-          <AntIcon name="arrowright" size={20} color="blue" />
-        </TouchableOpacity>
-      </LinearGradient>
-    );
   };
 
   setSearchText = (inputText) => {
@@ -88,7 +54,9 @@ class Main extends React.Component {
         <View style={styles.list}>
           <FlatList
             data={this.filteredData()}
-            renderItem={this.renderItem}
+            renderItem={({item}) => (
+              <RenderMain item={item} props={this.props} />
+            )}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
           />
