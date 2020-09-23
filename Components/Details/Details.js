@@ -13,14 +13,24 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import AntIcon from 'react-native-vector-icons/AntDesign';
 AntIcon.loadFont();
-
+import {useDeviceOrientation} from '@react-native-community/hooks';
 const {width, height} = Dimensions.get('screen');
 
 const Details = (props) => {
+  const orientation = useDeviceOrientation();
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.imageContainer}>
+      <View
+        style={
+          orientation.portrait ? styles.headerPortrait : styles.headerLandscape
+        }>
+        <View
+          style={
+            orientation.portrait
+              ? styles.imageContainerPortrait
+              : styles.imageContainerLandscape
+          }>
           <Image source={props.route.params.image} style={styles.image} />
         </View>
         <View style={styles.backArrow}>
@@ -29,7 +39,10 @@ const Details = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView style={styles.footer}>
+      <ScrollView
+        style={
+          orientation.portrait ? styles.footerPortrait : styles.footerLandscape
+        }>
         <View style={styles.status}>
           <Text style={styles.statusText}>AVAILABLE</Text>
         </View>
@@ -56,16 +69,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
+  headerPortrait: {
     flex: 1,
     backgroundColor: 'blue',
     borderBottomRightRadius: 300,
   },
-  imageContainer: {
-    width: width / 3,
-    height: height / 6,
+  headerLandscape: {
+    flex: 2,
+    backgroundColor: 'blue',
+    borderBottomRightRadius: 300,
+  },
+  imageContainerPortrait: {
+    width: width / 2,
+    height: width / 2,
     alignSelf: 'center',
-    marginTop: height / 12,
+    marginTop: width / 12,
+  },
+  imageContainerLandscape: {
+    width: height / 4,
+    height: width / 2,
+    alignSelf: 'center',
+    marginTop: width / 14,
   },
   image: {
     width: '100%',
@@ -80,11 +104,17 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 15,
   },
-  footer: {
+  footerPortrait: {
     flex: 2,
     backgroundColor: '#fff',
     paddingHorizontal: 50,
     paddingVertical: 60,
+  },
+  footerLandscape: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 50,
+    paddingTop: 10,
   },
   status: {
     width: 100,
