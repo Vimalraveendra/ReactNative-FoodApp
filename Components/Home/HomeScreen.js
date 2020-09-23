@@ -1,5 +1,14 @@
-import * as React from 'react';
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Platform,
+  ScrollView,
+} from 'react-native';
+
 import ScrollableTabView, {
   DefaultTabBar,
 } from 'react-native-scrollable-tab-view';
@@ -7,30 +16,47 @@ import Main from '../MainMenu/Main/Main';
 import Menu from '../MainMenu/Menu/Menu';
 import Popular from '../MainMenu/Popular/Popular';
 
-const {width} = Dimensions.get('screen');
+import {useDeviceOrientation} from '@react-native-community/hooks';
+
+const {width, height} = Dimensions.get('window');
 
 const HomeScreen = ({navigation}) => {
+  const orientation = useDeviceOrientation();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.image}
-          source={require('../assets/images/food3.jpg')}
-        />
-        <Text style={styles.title}>Food App</Text>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View
+        style={
+          orientation.portrait ? styles.headerPotrait : styles.headerLandscape
+        }>
+        <View>
+          <Image
+            style={
+              orientation.portrait
+                ? styles.imagePortrait
+                : styles.imageLandscape
+            }
+            source={require('../assets/images/food3.jpg')}
+          />
+          <Text style={styles.title}>Food App</Text>
+        </View>
+        <View style={styles.tabBar}>
+          <ScrollableTabView
+            style={styles.tabView}
+            initialPage={0}
+            tabBarActiveTextColor="blue"
+            renderTabBar={() => <DefaultTabBar />}>
+            <Main
+              tabLabel="Main"
+              props={navigation}
+              orientation={orientation}
+            />
+            <Menu tabLabel="Menu" props={navigation} />
+            <Popular tabLabel="Popular" props={navigation} />
+          </ScrollableTabView>
+        </View>
       </View>
-      <View style={styles.tabBar}>
-        <ScrollableTabView
-          style={styles.tabView}
-          initialPage={0}
-          tabBarActiveTextColor="blue"
-          renderTabBar={() => <DefaultTabBar />}>
-          <Main tabLabel="Main" props={navigation} />
-          <Menu tabLabel="Menu" props={navigation} />
-          <Popular tabLabel="Popular" props={navigation} />
-        </ScrollableTabView>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -39,20 +65,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    marginTop: 0,
-  },
   title: {
     position: 'absolute',
     fontSize: 30,
     fontWeight: '700',
     alignSelf: 'center',
     color: 'blue',
+    top: 20,
   },
-  image: {
+  headerPortrait: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  headerLandscape: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginHorizontal: 40,
+  },
+  imagePortrait: {
     width: width,
     height: width / 2,
     resizeMode: 'cover',
+  },
+  imageLandscape: {
+    marginTop: 10,
+    width: height - 100,
+    height: height / 4,
+    marginLeft: 20,
+    marginRight: 20,
+    alignSelf: 'center',
   },
 
   tabBar: {
@@ -60,7 +101,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   tabView: {
-    marginTop: 20,
+    marginTop: Platform.os === 'ios' ? 20 : 10,
   },
 });
 export default HomeScreen;

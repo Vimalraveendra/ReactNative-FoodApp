@@ -42,7 +42,9 @@ const Details = (props) => {
           end={{x: 1, y: 0}}
           colors={['#333CFF', '#33A2FF']}
           style={styles.gradient}>
-          <Text style={styles.buttonText}>order N ow</Text>
+          <TouchableOpacity>
+            <Text style={styles.buttonText}>order Now</Text>
+          </TouchableOpacity>
         </LinearGradient>
       </ScrollView>
     </View>
