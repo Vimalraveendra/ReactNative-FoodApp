@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
+import {View, FlatList, StyleSheet, Text, Image, Platform} from 'react-native';
 import ratingStar from '../../Ratings/Ratings';
 import Data from '../../Data/PopularData';
 
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
   avatarContainer: {
     flex: 1,
-    marginBottom: 10,
+    marginBottom: Platform.OS === 'ios' ? 10 : 5,
   },
   image: {
     width: 80,
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'blue',
     marginRight: 30,
-    resizeMode: 'contain',
   },
   name: {
     marginTop: 5,

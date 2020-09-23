@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
   FlatList,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from 'react-native';
 
 import RenderMain from '../../RenderItems/RenderMain';
@@ -37,7 +38,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerPortrait}>
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Search here..."
@@ -65,18 +66,21 @@ class Main extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerPortrait: {
     flex: 1,
     backgroundColor: '#fff',
   },
+
   inputContainer: {
     flexDirection: 'row',
     backgroundColor: '#f2f2f2',
-    paddingVertical: 5,
+    paddingVertical: Platform.OS === 'ios' ? 5 : 0,
     paddingHorizontal: 10,
     borderRadius: 100,
     marginTop: 10,
     marginVertical: 5,
+
+    alignItems: 'center',
   },
   textInput: {
     flex: 1,
