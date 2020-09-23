@@ -33,6 +33,7 @@ const RenderMain = ({item, props}) => {
             image: item.image,
             price: item.price,
             name: item.name,
+            orientation: props.orientation,
           })
         }>
         <AntIcon name="arrowright" size={20} color="blue" />
